@@ -1,11 +1,15 @@
 {
     "name": "aisx",
     "displayName": "AI Session Xplorer",
-    "version": "0.1.0",
+    "version": "1.1.0",
     "description": "View, search, and revisit your Claude Code or Codex AI session history directly in VS Code",
     "publisher": "jerlendds",
     "private": false,
     "preview": false,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jerlendds/vscode-AIsx.git"
+    },
     "author": {
         "name": "jerlendds"
     },
