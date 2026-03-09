@@ -1,24 +1,25 @@
 # vscode-AIsx
 
-<p align="center">
-  <img src="assets/logo.png" height="180" alt="AIsx Logo">
-</p>
+  <p align="center">                                                                                                                                                                       
+    <img src="assets/logo.png" height="180" alt="AIsx Logo">
+  </p>                                                                                                                                                                                     
+                  
+  <p align="center">
+    <strong>AIsx</strong> stands for <strong>AI Session Xplorer</strong>.
+  </p>
 
-<p align="center">
-  <strong>AIsx</strong> stands for <strong>AI Session Xplorer</strong>.
-</p>
+  <p align="center">
+    <b>></b> <i>View, search, and analyze your local <strong>Codex</strong> and <strong>Claude Code</strong> session history directly inside <a href="https://github.com/VSCodium/vscodium">VSCodium</a></i> <b><</b>
+  </p>
 
-<p align="center">
-  
-  > View, search, and reopen your local <strong>Codex</strong> and <strong>Claude Code</strong> session history directly inside <a href="https://github.com/VSCodium/vscodium">VSCodium</a>.
-</p>
+  <details>
+   <summary>📼 Click here to watch the video demo</summary>
 
-<details>
- <summary>📼 Watch a video demo</summary>
- 
- [aisx demo](https://github.com/user-attachments/assets/5c683763-bc9a-4c47-b70a-59aa2caeeb74)
+[demo.mp4](https://github.com/user-attachments/assets/896198a9-552c-4847-be33-4ab699679620)
 
-</details>
+  </details>
+
+---
 
 ## What It Does
 
@@ -33,6 +34,7 @@ It currently supports:
 - Full session viewer with rendered markdown
 - Tool call and tool result inspection
 - Claude file-history snapshot loading for tracked files
+- **Analytics Dashboard** — behavioral analysis of your AI sessions using the AFT framework
 
 ## How It Works
 
@@ -75,6 +77,82 @@ Opening a session creates a dedicated panel where you can:
 
 For Claude Code sessions, AIsx can load tracked file-history snapshots on demand from Claude's local backup store. Large files are truncated safely before display.
 
+### Analytics Dashboard
+
+Click the bar chart icon in the Sessions sidebar title bar to open the Analytics Dashboard — a dedicated panel for studying the behavioral patterns across all your AI sessions.
+
+The dashboard implements the [AFT framework](https://technoyoda.github.io/agent-science.html) — an empirical approach to measuring agent behavior through three complementary lenses:
+
+**φ (phi) — Behavioral measurement.** Every session is projected into a 10-dimensional behavioral vector:
+
+| Dimension             | What it measures                                        |
+| --------------------- | ------------------------------------------------------- |
+| `num_tool_calls`      | Total tool invocations                                  |
+| `num_reads`           | File read operations                                    |
+| `num_edits`           | File edit / write operations                            |
+| `num_bash`            | Terminal commands                                       |
+| `num_messages`        | Total messages in the session                           |
+| `exploration_ratio`   | Reads ÷ total tool calls                                |
+| `commit_speed`        | Normalised position of first edit (0 = early, 1 = late) |
+| `direction_changes`   | Read → write mode switches                              |
+| `verification_effort` | Bash calls ÷ total tool calls                           |
+| `error_rate`          | Fraction of tool results reporting errors               |
+
+**ψ (psi) — State progression.** Each session is labeled with the furthest task state it reached: `start → exploring → editing → verified`. Filtering to sessions that passed through a
+given state produces a _horizon_ — a sub-field with its own metrics.
+
+**ρπ (rho) — Intent.** Every assistant message is classified as _acting_ (made tool calls) or _introspecting_ (reasoning without tool calls). The run-length-encoded sequence is the
+session's _program string_. Sessions that share a program string form a _program family_.
+
+#### Dashboard tabs
+
+| Tab                   | Contents                                                               |
+| --------------------- | ---------------------------------------------------------------------- |
+| **Overview**          | KPIs, session timeline, source distribution, top projects              |
+| **Field Metrics φ**   | Field width, per-dimension variance, mean behavior (centroid)          |
+| **Separation & Skew** | What separates successful from failing sessions; correlation direction |
+| **Horizons ψ**        | Width, convergence, and drift across the state chain                   |
+| **Intent ρπ**         | Program families, act/think cycle distribution, acting ratio histogram |
+| **Custom Scripts**    | Load and visualize user-supplied measurement dimensions                |
+| **Settings**          | Python venv path, custom scripts directory, session limit              |
+
+#### Metrics reference
+
+- **Width W_F** — Σ Var(φⱼ) — total behavioral spread. Near zero means every session did the same thing.
+- **Convergence** — E[y] / σ[y] — outcome signal-to-noise ratio. Low convergence means results are a coin flip.
+- **Separation Δ_F** — μ(successes) − μ(failures) per dimension. Points at which behavioral axes predict outcome.
+- **Skew** — corr(outcome, φⱼ) — negative means more activity on that dimension correlates with failure; positive means it correlates with success.
+- **Drift δ(s)** — W(H(s)) − W(H⁺(s)) — excess spread contributed by failing sessions at each horizon state.
+
+#### Python AFT integration
+
+Set a Python virtual environment with [`agent_fields`](https://github.com/technoyoda/aft) installed to run a server-side AFT analysis that merges with the JavaScript results:
+
+```bash
+pip install git+https://github.com/technoyoda/aft.git
+```
+
+Then set the venv path in the Settings tab. The extension will execute the Python analysis and surface the results on the Overview tab.
+
+#### Custom measurement scripts
+
+Place `.js` files in a configured scripts directory to add new φ dimensions to the behavioral space. Each script is evaluated in the webview sandbox and its results are charted
+alongside the built-in dimensions.
+
+```js
+// my_dimension.js
+exports.label = 'My Metric';
+exports.description = 'What this dimension measures';
+
+exports.measure = function (session) {
+  // session: { phi, statesReached, intentSequence, outcome, errorRate, source, ... }
+  // Return a single number.
+  const total = session.intentSequence.length || 1;
+  const acting = session.intentSequence.filter((x) => x === 'A').length;
+  return acting / total;
+};
+```
+
 ## Usage
 
 1. Install the extension.
@@ -82,11 +160,13 @@ For Claude Code sessions, AIsx can load tracked file-history snapshots on demand
 3. Search or filter sessions by source.
 4. Click any session to open it in a panel.
 5. Use the panel filters to focus on messages, tool activity, or file snapshots.
+6. Click the **bar chart icon** in the Sessions sidebar title bar to open the Analytics Dashboard.
 
 Available commands:
 
 - `AIsx: Refresh Sessions`
 - `AIsx: Open Session`
+- `AIsx: Open Analytics Dashboard`
 
 ## Install
 
@@ -139,7 +219,8 @@ pnpm release
 
 ## Why AIsx
 
-Session history is useful, but the default experience is usually buried in local JSONL files. AIsx makes that history searchable and readable where developers already work: inside the editor.
+Session history is useful, but the default experience is usually buried in local JSONL files. AIsx makes that history searchable and readable where developers already work: inside the
+editor. The Analytics Dashboard goes further — treating your session history as a behavioral dataset and giving you the instruments to study it.
 
 ## An open letter to ~~Microsoft~~ Microslop!
 

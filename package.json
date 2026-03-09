@@ -1,8 +1,8 @@
 {
     "name": "aisx",
     "displayName": "AI Session Xplorer",
-    "version": "1.3.0",
-    "description": "View, search, and revisit your Claude Code or Codex AI session history directly in VS Code",
+    "version": "2.0.0",
+    "description": "View, search, and revisit your Claude Code or Codex AI session history with directly in VS Code + An analytical dashboard showing you the science behind agent behavior in your chat sessions.",
     "publisher": "jerlendds",
     "private": false,
     "preview": false,
@@ -53,6 +53,12 @@
                 "command": "aisx.openSession",
                 "title": "Open Session",
                 "category": "AIsx"
+            },
+            {
+                "command": "aisx.openAnalytics",
+                "title": "Open Analytics Dashboard",
+                "icon": "media/analytics-icon.svg",
+                "category": "AIsx"
             }
         ],
         "menus": {
@@ -61,8 +67,35 @@
                     "command": "aisx.refresh",
                     "when": "view == aisx.sessions",
                     "group": "navigation"
+                },
+                {
+                    "command": "aisx.openAnalytics",
+                    "when": "view == aisx.sessions",
+                    "group": "navigation"
                 }
             ]
+        },
+        "configuration": {
+            "title": "AIsx Analytics",
+            "properties": {
+                "aisx.analytics.pythonVenvPath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Path to Python virtual environment with agent_fields installed (e.g. /home/user/myenv). Run: pip install git+https://github.com/technoyoda/aft.git"
+                },
+                "aisx.analytics.customScriptsPath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Path to a directory containing custom .js measurement scripts. Each file should export measure(session) and label."
+                },
+                "aisx.analytics.maxSessions": {
+                    "type": "number",
+                    "default": 50,
+                    "minimum": 5,
+                    "maximum": 500,
+                    "description": "Maximum number of most-recent sessions to load for analysis."
+                }
+            }
         }
     },
     "eslintConfig": {

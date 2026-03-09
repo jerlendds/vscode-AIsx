@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { SidebarProvider } from './SidebarProvider';
 import { SessionPanel } from './SessionPanel';
+import { AnalyticsDashboard } from './AnalyticsDashboard';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('AI Session Xplorer (AIsx) is now active');
@@ -26,6 +27,12 @@ export function activate(context: vscode.ExtensionContext) {
                 SessionPanel.createOrShow(context, sessionId, locator, source);
             },
         ),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('aisx.openAnalytics', () => {
+            AnalyticsDashboard.createOrShow(context);
+        }),
     );
 }
 
