@@ -2,10 +2,10 @@
     "name": "aisx",
     "displayName": "AI Session Xplorer",
     "version": "0.1.0",
-    "description": "Browse Claude Code and Codex AI session history directly in VS Code",
+    "description": "View, search, and revisit your Claude Code or Codex AI session history directly in VS Code",
     "publisher": "jerlendds",
-    "private": true,
-    "preview": true,
+    "private": false,
+    "preview": false,
     "author": {
         "name": "jerlendds"
     },
