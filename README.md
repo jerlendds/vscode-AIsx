@@ -34,7 +34,7 @@ It currently supports:
 - Full session viewer with rendered markdown
 - Tool call and tool result inspection
 - Claude file-history snapshot loading for tracked files
-- **Analytics Dashboard** — behavioral analysis of your AI sessions using the AFT framework
+- **Analytics Dashboard** -- behavioral analysis of your AI sessions using the AFT framework
 
 ## How It Works
 
@@ -79,11 +79,11 @@ For Claude Code sessions, AIsx can load tracked file-history snapshots on demand
 
 ### Analytics Dashboard
 
-Click the bar chart icon in the Sessions sidebar title bar to open the Analytics Dashboard — a dedicated panel for studying the behavioral patterns across all your AI sessions.
+Click the bar chart icon in the Sessions sidebar title bar to open the Analytics Dashboard -- a dedicated panel for studying the behavioral patterns across all your AI sessions.
 
-The dashboard implements the [AFT framework](https://technoyoda.github.io/agent-science.html) — an empirical approach to measuring agent behavior through three complementary lenses:
+The dashboard implements the [AFT framework](https://technoyoda.github.io/agent-science.html) -- an empirical approach to measuring agent behavior through three complementary lenses:
 
-**φ (phi) — Behavioral measurement.** Every session is projected into a 10-dimensional behavioral vector:
+**φ (phi) -- Behavioral measurement.** Every session is projected into a 10-dimensional behavioral vector:
 
 | Dimension             | What it measures                                        |
 | --------------------- | ------------------------------------------------------- |
@@ -98,10 +98,10 @@ The dashboard implements the [AFT framework](https://technoyoda.github.io/agent-
 | `verification_effort` | Bash calls ÷ total tool calls                           |
 | `error_rate`          | Fraction of tool results reporting errors               |
 
-**ψ (psi) — State progression.** Each session is labeled with the furthest task state it reached: `start → exploring → editing → verified`. Filtering to sessions that passed through a
-given state produces a _horizon_ — a sub-field with its own metrics.
+**ψ (psi) -- State progression.** Each session is labeled with the furthest task state it reached: `start → exploring → editing → verified`. Filtering to sessions that passed through a
+given state produces a _horizon_ -- a sub-field with its own metrics.
 
-**ρπ (rho) — Intent.** Every assistant message is classified as _acting_ (made tool calls) or _introspecting_ (reasoning without tool calls). The run-length-encoded sequence is the
+**ρπ (rho) -- Intent.** Every assistant message is classified as _acting_ (made tool calls) or _introspecting_ (reasoning without tool calls). The run-length-encoded sequence is the
 session's _program string_. Sessions that share a program string form a _program family_.
 
 #### Dashboard tabs
@@ -118,11 +118,11 @@ session's _program string_. Sessions that share a program string form a _program
 
 #### Metrics reference
 
-- **Width W_F** — Σ Var(φⱼ) — total behavioral spread. Near zero means every session did the same thing.
-- **Convergence** — E[y] / σ[y] — outcome signal-to-noise ratio. Low convergence means results are a coin flip.
-- **Separation Δ_F** — μ(successes) − μ(failures) per dimension. Points at which behavioral axes predict outcome.
-- **Skew** — corr(outcome, φⱼ) — negative means more activity on that dimension correlates with failure; positive means it correlates with success.
-- **Drift δ(s)** — W(H(s)) − W(H⁺(s)) — excess spread contributed by failing sessions at each horizon state.
+- **Width W_F** -- Σ Var(φⱼ) -- total behavioral spread. Near zero means every session did the same thing.
+- **Convergence** -- E[y] / σ[y] -- outcome signal-to-noise ratio. Low convergence means results are a coin flip.
+- **Separation Δ_F** -- μ(successes) − μ(failures) per dimension. Points at which behavioral axes predict outcome.
+- **Skew** -- corr(outcome, φⱼ) -- negative means more activity on that dimension correlates with failure; positive means it correlates with success.
+- **Drift δ(s)** -- W(H(s)) − W(H⁺(s)) -- excess spread contributed by failing sessions at each horizon state.
 
 #### Python AFT integration
 
@@ -220,7 +220,7 @@ pnpm release
 ## Why AIsx
 
 Session history is useful, but the default experience is usually buried in local JSONL files. AIsx makes that history searchable and readable where developers already work: inside the
-editor. The Analytics Dashboard goes further — treating your session history as a behavioral dataset and giving you the instruments to study it.
+editor. The Analytics Dashboard goes further -- treating your session history as a behavioral dataset and giving you the instruments to study it.
 
 ## An open letter to ~~Microsoft~~ Microslop!
 
