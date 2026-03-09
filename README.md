@@ -145,7 +145,8 @@ Session history is useful, but the default experience is usually buried in local
 
 ```md
 Let me be extremely clear: the Visual Studio Code Marketplace publishing
-pipeline is a masterclass in hostile developer experience, needless bureaucracy, and the kind of dark UX garbage Microsoft has been perfecting for decades.
+pipeline is a masterclass in hostile developer experience, needless bureaucracy,
+and the kind of dark UX garbage Microsoft has been perfecting for decades.
 
 I am trying to publish a simple VS Code extension. That should involve one
 command and an API key. Instead, what you’ve built is an absurd maze of

@@ -41,7 +41,7 @@ jobs:
           if [ -n "$GIT_TAG" ] && [ "$(git rev-list -n 1 $GIT_TAG 2>/dev/null || echo "")" = "$(git rev-parse HEAD)" ]; then
             echo "GIT_TAG=${GIT_TAG}" >> $GITHUB_OUTPUT
           else
-            echo "GIT_TAG=''" >> $GITHUB_OUTPUT
+            echo "GIT_TAG=" >> $GITHUB_OUTPUT
           fi
 
   publish:
