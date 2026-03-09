@@ -144,13 +144,22 @@ Session history is useful, but the default experience is usually buried in local
 ## An open letter to ~~Microsoft~~ Microslop!
 
 ```md
-Let me be extremely clear: the Visual Studio Code Marketplace publishing pipeline is a masterclass in hostile developer experience, needless bureaucracy, and the kind of dark UX garbage Microsoft has been perfecting for decades.
+Let me be extremely clear: the Visual Studio Code Marketplace publishing
+pipeline is a masterclass in hostile developer experience, needless bureaucracy, and the kind of dark UX garbage Microsoft has been perfecting for decades.
 
-I am trying to publish a simple VS Code extension. That should involve one command and an API key. Instead, what you’ve built is an absurd maze of unrelated Microsoft infrastructure duct-taped together with fragile tooling and undocumented failure modes.
+I am trying to publish a simple VS Code extension. That should involve one
+command and an API key. Instead, what you’ve built is an absurd maze of
+unrelated Microsoft infrastructure duct-taped together with fragile tooling
+and undocumented failure modes.
 
 Let’s walk through the clown show.
 
-First: publishing an extension requires a Personal Access Token from Azure DevOps. Why the fuck is the VS Code Marketplace even coupled to Azure DevOps in the first place? I’m not using Azure DevOps. I don’t want Azure DevOps. I don’t need Azure DevOps. Yet somehow to publish an extension I’m forced into your sprawling enterprise identity spaghetti just to generate a token with “Marketplace (Manage)” scope.
+First: publishing an extension requires a Personal Access Token from Azure
+DevOps. Why the fuck is the VS Code Marketplace even coupled to Azure DevOps
+in the first place? I’m not using Azure DevOps. I don’t want Azure DevOps.
+I don’t need Azure DevOps. Yet somehow to publish an extension I’m forced
+into your sprawling enterprise identity spaghetti just to generate a token
+with "Marketplace (Manage)" scope.
 
 Source: https://learn.microsoft.com/en-us/visualstudio/extensibility/publish/overview
 
@@ -164,28 +173,40 @@ Before I can even publish, I have to:
 4.  Run `vsce login <publisher>` which asks me to paste the token into a CLI prompt like it’s 2005.
 5.  Only THEN can I attempt `vsce publish`.
 
-None of this is necessary. None of it improves security. None of it improves developer experience. It is pure Microsoft process bloat.
+None of this is necessary. None of it improves security.
+None of it improves developer experience. It is pure Microsoft process bloat.
 
-And the tooling? `vsce` itself is brittle as hell. One wrong image format in a README, one SVG somewhere in the project, one badge from a provider you arbitrarily don’t trust, and suddenly publishing fails because the CLI decides it’s the image police.
+And the tooling? `vsce` itself is brittle as hell. One wrong image format
+in a README, one SVG somewhere in the project, one badge from a provider you
+arbitrarily don’t trust, and suddenly publishing fails because the CLI decides
+it’s the image police.
 
 Source: https://code.visualstudio.com/api/working-with-extensions/publishing-extension
 
-So instead of focusing on writing extensions, developers are stuck debugging your arbitrary content filters, Marketplace constraints, and token scope errors that return completely useless messages like:
+So instead of focusing on writing extensions, developers are stuck debugging
+your arbitrary content filters, Marketplace constraints, and token scope errors
+that return completely useless messages like:
 
-“403 Forbidden”
+"403 Forbidden"
 
-No explanation. No diagnostics. Just another dead end in the Microsoft documentation labyrinth.
+No explanation. No diagnostics. Just another dead end in the Microsoft
+documentation labyrinth.
 
 And the UX patterns around all this are peak Microsoft:
 
 • Multiple portals with different authentication states
-• Token scopes hidden behind “Show all scopes” links
+• Token scopes hidden behind "Show all scopes" links
 • A publisher identity system that can’t be renamed once created
 • Documentation that assumes developers will happily reverse-engineer the workflow
 
-This is the same company that somehow managed to turn something as simple as publishing a plugin into a multi-service corporate compliance ritual.
+This is the same company that somehow managed to turn something as simple as
+publishing a plugin into a multi-service corporate compliance ritual.
 
-Meanwhile platforms like npm, PyPI, Cargo, or even the Chrome Web Store manage to publish packages with a fraction of the friction. But Microsoft? No — you get Azure DevOps tokens, publisher IDs, CLI login prompts, portal dashboards, and random validation rules sprinkled on top like a bureaucratic shit sundae.
+Meanwhile platforms like npm, PyPI, Cargo, or even the Chrome Web Store manage
+to publish packages with a fraction of the friction. But Microsoft? No.
+You get Azure DevOps tokens, publisher IDs, CLI login prompts, portal
+dashboards, and random validation rules sprinkled on top like a
+bureaucratic shit sundae.
 
 The end result is exactly what you’d expect:
 
@@ -194,18 +215,22 @@ The end result is exactly what you’d expect:
 • New developers give up entirely
 • The Marketplace ecosystem becomes harder to contribute to
 
-And this pattern isn’t limited to the Marketplace. It reflects the broader Microsoft philosophy of:
+And this pattern isn’t limited to the Marketplace.
+It reflects the broader Microsoft philosophy of:
 
-“Take a simple developer task and bury it under five layers of enterprise infrastructure.”
+"Take a simple developer task and bury it under five layers of enterprise infrastructure."
 
 You’ve done it with Azure.
 You’ve done it with identity.
 You’ve done it with GitHub integrations.
 And you’ve absolutely done it with VS Code extension publishing.
 
-The tragic part is that VS Code itself is a genuinely good product. Fast. Extensible. Loved by developers.
+The tragic part is that VS Code itself is a genuinely good product.
+Fast. Extensible. Loved by developers.
 
-But the moment someone tries to contribute to the ecosystem, they run headfirst into the Microsoft Bureaucracy Engine™ and the whole illusion falls apart.
+But the moment someone tries to contribute to the ecosystem,
+they run headfirst into the Microsoft Bureaucracy Engine™ and the
+whole illusion falls apart.
 
 Fix your shit.
 
@@ -220,8 +245,12 @@ No hidden scope menus.
 No multi-portal identity management.
 No fucking scavenger hunt across Microsoft services.
 
-Until then, the Marketplace publishing process will remain one of the most unnecessarily painful developer workflows in modern tooling.
+Until then, the Marketplace publishing process will remain
+one of the most unnecessarily painful developer workflows in modern tooling
+that I have ever had the displeasure of trying.
 
 Sincerely,
-A developer who just wanted to publish a goddamn extension without enrolling in the Microsoft enterprise ecosystem circus.
+A developer who just wanted to publish a
+goddamn extension without enrolling in the Microsoft
+enterprise ecosystem circus.
 ```
