@@ -13,6 +13,13 @@
   > View, search, and reopen your local <strong>Codex</strong> and <strong>Claude Code</strong> session history directly inside <a href="https://github.com/VSCodium/vscodium">VSCodium</a>.
 </p>
 
+<details>
+ <summary>📼 Watch a video demo</summary>
+ 
+ [aisx demo](https://github.com/user-attachments/assets/5c683763-bc9a-4c47-b70a-59aa2caeeb74)
+
+</details>
+
 ## What It Does
 
 AIsx adds an Activity Bar view that indexes local AI session history and lets you inspect it without leaving your editor.
@@ -26,13 +33,6 @@ It currently supports:
 - Full session viewer with rendered markdown
 - Tool call and tool result inspection
 - Claude file-history snapshot loading for tracked files
-
-<details>
- <summary>Watch a video demo</summary>
- 
- [aisx demo](https://github.com/user-attachments/assets/7ef4e7bf-cc3e-4d11-84f0-7e56dd777bf7)
-
-</details>
 
 ## How It Works
 

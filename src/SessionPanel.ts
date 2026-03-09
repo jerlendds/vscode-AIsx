@@ -150,7 +150,7 @@ body{font-family:var(--vscode-font-family);font-size:13px;line-height:1.6;color:
 .md hr{border:none;border-top:1px solid var(--vscode-widget-border,#333);margin:12px 0}
 
 /* Tool blocks */
-.tool{border:1px solid var(--vscode-widget-border,#333);border-radius:4px;overflow:hidden;margin:4px 0}
+.tool{border:1px solid var(--vscode-widget-border,#333);border-radius:4px;margin:4px 0}
 .tool-head{padding:5px 10px;background:var(--vscode-sideBar-background);display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
 .tool-head:hover{background:var(--vscode-list-hoverBackground)}
 .tool-icon{font-size:10px;color:#22c55e;font-weight:700}
@@ -158,12 +158,12 @@ body{font-family:var(--vscode-font-family);font-size:13px;line-height:1.6;color:
 .tool-cmd{font-size:11px;color:var(--vscode-descriptionForeground);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--vscode-editor-font-family,monospace)}
 .chevron{font-size:9px;color:var(--vscode-descriptionForeground);transition:transform .15s;flex-shrink:0}
 .chevron.open{transform:rotate(90deg)}
-.tool-body{padding:10px;background:var(--vscode-textCodeBlock-background,#1e1e1e);display:none;border-top:1px solid var(--vscode-widget-border,#333)}
-.tool-body.open{display:block}
+.tool-body{padding:0 10px;background:var(--vscode-textCodeBlock-background,#1e1e1e);max-height:0;overflow:hidden;border-top:0 solid var(--vscode-widget-border,#333);transition:max-height .2s ease,padding .2s ease,border-top-width .2s ease}
+.tool-body.open{padding:10px;max-height:36rem;overflow-y:auto;border-top:1px solid var(--vscode-widget-border,#333)}
 .tool-body pre{font-family:var(--vscode-editor-font-family,monospace);font-size:11px;white-space:pre-wrap;word-break:break-all;color:var(--vscode-editor-foreground);line-height:1.5}
 
 /* Tool result blocks */
-.result{border:1px solid var(--vscode-widget-border,#333);border-radius:4px;overflow:hidden;margin:4px 0}
+.result{border:1px solid var(--vscode-widget-border,#333);border-radius:4px;margin:4px 0}
 .result.error{border-color:#ef444444}
 .result-head{padding:5px 10px;background:var(--vscode-sideBar-background);display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
 .result-head:hover{background:var(--vscode-list-hoverBackground)}
@@ -173,18 +173,18 @@ body{font-family:var(--vscode-font-family);font-size:13px;line-height:1.6;color:
 .result-label{font-size:11px;font-weight:600;color:#60a5fa;font-family:var(--vscode-editor-font-family,monospace)}
 .result.error .result-label{color:#ef4444}
 .result-id{font-size:10px;color:var(--vscode-descriptionForeground);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--vscode-editor-font-family,monospace)}
-.result-body{padding:10px;background:var(--vscode-textCodeBlock-background,#1e1e1e);display:none;border-top:1px solid var(--vscode-widget-border,#333)}
-.result-body.open{display:block}
+.result-body{padding:0 10px;background:var(--vscode-textCodeBlock-background,#1e1e1e);max-height:0;overflow:hidden;border-top:0 solid var(--vscode-widget-border,#333);transition:max-height .2s ease,padding .2s ease,border-top-width .2s ease}
+.result-body.open{padding:10px;max-height:36rem;overflow-y:auto;border-top:1px solid var(--vscode-widget-border,#333)}
 .result-body pre{font-family:var(--vscode-editor-font-family,monospace);font-size:11px;white-space:pre-wrap;word-break:break-all;color:var(--vscode-editor-foreground);line-height:1.5}
 
 /* Snapshot blocks */
-.snap{border:1px solid #7c3aed44;border-radius:4px;overflow:hidden;margin:4px 0}
+.snap{border:1px solid #7c3aed44;border-radius:4px;margin:4px 0}
 .snap-head{padding:5px 10px;background:#7c3aed18;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
 .snap-head:hover{background:#7c3aed28}
 .snap-icon{font-size:10px;color:#a78bfa;font-weight:700}
 .snap-title{font-size:11px;font-weight:600;color:#a78bfa}
-.snap-body{padding:10px;background:var(--vscode-textCodeBlock-background,#1e1e1e);display:none;border-top:1px solid #7c3aed44}
-.snap-body.open{display:block}
+.snap-body{padding:0 10px;background:var(--vscode-textCodeBlock-background,#1e1e1e);max-height:0;overflow:hidden;border-top:0 solid #7c3aed44;transition:max-height .2s ease,padding .2s ease,border-top-width .2s ease}
+.snap-body.open{padding:10px;max-height:36rem;overflow-y:auto;border-top:1px solid #7c3aed44}
 .snap-file{margin:4px 0;border:1px solid var(--vscode-widget-border,#333);border-radius:3px;overflow:hidden}
 .snap-file-head{padding:4px 8px;background:var(--vscode-sideBar-background);font-family:var(--vscode-editor-font-family,monospace);font-size:10px;color:var(--vscode-descriptionForeground);display:flex;align-items:center;gap:6px;cursor:pointer}
 .snap-file-head:hover{background:var(--vscode-list-hoverBackground)}
@@ -258,7 +258,6 @@ function toggle(id) {
   const ch=document.getElementById(id+'-ch');
   if(el){el.classList.toggle('open');if(ch)ch.classList.toggle('open');}
 }
-window.toggle=toggle;
 
 const loadedFiles=new Set(), pending=new Map();
 
@@ -269,14 +268,25 @@ function loadFile(fid, sid, fname) {
   pending.set(fname,fid);
   vscode.postMessage({type:'getFileHistory',sessionId:sid,backupFileName:fname});
 }
-window.loadFile=loadFile;
+
+document.addEventListener('click', function(e) {
+  const head = e.target.closest('[data-toggle]');
+  if (head) { toggle(head.dataset.toggle); return; }
+  const btn = e.target.closest('[data-load-fid]');
+  if (btn) {
+    const fid=btn.dataset.loadFid, sid=btn.dataset.loadSid, fname=btn.dataset.loadFname;
+    loadFile(fid, sid, fname);
+    const fc=document.getElementById(fid);
+    if(fc)fc.classList.add('open');
+  }
+});
 
 function buildTool(tool) {
   const id=uid();
   const hasPayload=tool.payload&&tool.payload.trim();
   const preview=(tool.command||tool.name||'').substring(0,100);
   return \`<div class="tool">
-    <div class="tool-head" onclick="toggle('\${id}')">
+    <div class="tool-head" data-toggle="\${id}">
       <span class="tool-icon">⚙</span>
       <span class="tool-name">\${esc(tool.name)}</span>
       \${preview?\`<span class="tool-cmd">\${esc(preview)}</span>\`:''}
@@ -293,7 +303,7 @@ function buildResult(result) {
   const label=result.isError?'Tool Error':'Tool Result';
   const icon=result.isError?'✗':'✓';
   return \`<div class="result\${errClass}">
-    <div class="result-head" onclick="toggle('\${id}')">
+    <div class="result-head" data-toggle="\${id}">
       <span class="result-icon">\${icon}</span>
       <span class="result-label">\${label}</span>
       \${result.toolUseId?\`<span class="result-id">\${esc(result.toolUseId)}</span>\`:''}
@@ -312,7 +322,7 @@ function buildSnap(snap) {
       <div class="snap-file-head">
         <span>📄</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">\${esc(fp)}</span>
-        <button class="load-btn" onclick="loadFile('\${fid}',\${JSON.stringify(SESSION_ID)},\${JSON.stringify(bf)});document.getElementById('\${fid}').classList.add('open')">Load</button>
+        <button class="load-btn" data-load-fid="\${fid}" data-load-sid="\${esc(SESSION_ID)}" data-load-fname="\${esc(bf)}">Load</button>
       </div>
       <div class="snap-file-content" id="\${fid}">
         <div style="color:var(--vscode-descriptionForeground);font-size:11px;padding:4px">Click Load to view file contents</div>
@@ -320,7 +330,7 @@ function buildSnap(snap) {
     </div>\`;
   }).join('');
   return \`<div class="snap">
-    <div class="snap-head" onclick="toggle('\${id}')">
+    <div class="snap-head" data-toggle="\${id}">
       <span class="snap-icon">◈</span>
       <span class="snap-title">File Snapshot (\${files.length} file\${files.length!==1?'s':''})</span>
       <span style="font-size:10px;color:var(--vscode-descriptionForeground);flex:1">\${esc(timeStr(snap.timestamp))}</span>
